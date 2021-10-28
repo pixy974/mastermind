@@ -12,6 +12,7 @@ public class Mastermind {
     Mastermind() {
         //générer la combinaison
         this.getRandomComb();
+        System.out.println("combinaison de l'ordi:"+Arrays.toString(this.keyColor)+" Couleurs possibles:"+Arrays.toString(colors));
     }
 
     private void getRandomComb()
@@ -34,19 +35,27 @@ public class Mastermind {
     public String testCombination(String comb)
     {
         String[] combChar = comb.split("");
+        String combCharTamponPourEviterLesDoublonsSaGrandMere = comb;
 
         //va renvoyer O O - -
         this.answer = "";
+
+        //COMPTE LES BONNES ET MAUVAISES REPONSES
         int answerO = 0;
         int answerT = 0;
 
         for(int i = 0; i<this.keyColor.length; i++)
         {
-            //on devrait tester si l'index et présent au meme index dans le tableau
+            var indexSearch = combCharTamponPourEviterLesDoublonsSaGrandMere.indexOf(this.keyColor[i]);
+            //BONNE REPONSE
             if (this.keyColor[i].equals(combChar[i])) {
                 answerO += 1;
-            } else if (Arrays.asList(combChar).indexOf(this.keyColor[i]) < 0) {
+            //MAUVAISE REPONSE/ RECHERCHE AUSSI DANS VARIABLE TAMPON POUR EVITER LES DOUBLONS
+            } else if (indexSearch < 0 && combCharTamponPourEviterLesDoublonsSaGrandMere.indexOf(this.keyColor[i]) < 0) {
                 answerT += 1;
+            //SI MAL PLACE JE SUPPRIME DE MA VARIABLE TAMPON POUR EVITER LE PROBLEME DE DOUBLON
+            } else {
+                combCharTamponPourEviterLesDoublonsSaGrandMere = combCharTamponPourEviterLesDoublonsSaGrandMere.replaceFirst(this.keyColor[i], "");
             }
 
         }
