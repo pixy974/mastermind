@@ -35,7 +35,6 @@ public class Mastermind {
     public String testCombination(String comb)
     {
         String[] combChar = comb.split("");
-        String combCharTamponPourEviterLesDoublonsSaGrandMere = comb;
 
         //va renvoyer O O - -
         this.answer = "";
@@ -44,20 +43,19 @@ public class Mastermind {
         int answerO = 0;
         int answerT = 0;
 
+        //scan la solution
         for(int i = 0; i<this.keyColor.length; i++)
         {
-            var indexSearch = combCharTamponPourEviterLesDoublonsSaGrandMere.indexOf(this.keyColor[i]);
             //BONNE REPONSE
             if (this.keyColor[i].equals(combChar[i])) {
                 answerO += 1;
             //MAUVAISE REPONSE/ RECHERCHE AUSSI DANS VARIABLE TAMPON POUR EVITER LES DOUBLONS
-            } else if (indexSearch < 0 && combCharTamponPourEviterLesDoublonsSaGrandMere.indexOf(this.keyColor[i]) < 0) {
+            } else if (comb.indexOf(this.keyColor[i]) < 0) {
                 answerT += 1;
             //SI MAL PLACE JE SUPPRIME DE MA VARIABLE TAMPON POUR EVITER LE PROBLEME DE DOUBLON
             } else {
-                combCharTamponPourEviterLesDoublonsSaGrandMere = combCharTamponPourEviterLesDoublonsSaGrandMere.replaceFirst(this.keyColor[i], "");
+                comb = comb.replaceFirst(this.keyColor[i], "");
             }
-
         }
         this.answer = this.getAnswerString(answerO, answerT) ;
         return this.getAnswer();
